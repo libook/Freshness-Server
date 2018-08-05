@@ -82,6 +82,8 @@
         timerListRouter.get('/', async (ctx) => {
             ctx.body = await TimerModel.find({
                 "isDeleted": false,
+            }, {
+                "isDeleted": false,
             }).sort({
                 "expirationDate": 1,
             });

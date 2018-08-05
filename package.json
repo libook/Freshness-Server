@@ -4,7 +4,9 @@
   "description": "This is the server-end for Freshness.",
   "main": "source/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devel": "node source/server.js",
+    "doc": "uridoc source/server.js document/api.md"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,13 @@
   "homepage": "https://github.com/libook/Freshness-Server#readme",
   "engines": {
     "node": ">=10.8.0",
-    "npm" : ">=6.3.0"
+    "npm": ">=6.3.0"
+  },
+  "dependencies": {
+    "koa": "2.5.2",
+    "koa-router": "7.4.0"
+  },
+  "devDependencies": {
+    "uridoc": "1.2.2"
   }
 }

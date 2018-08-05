@@ -1,0 +1,31 @@
+{
+  "name": "freshness-server",
+  "version": "0.0.1",
+  "description": "This is the server-end for Freshness.",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libook/Freshness-Server.git"
+  },
+  "keywords": [
+    "freshness",
+    "koa",
+    "mongodb"
+  ],
+  "author": {
+    "name": "Daniel Li",
+    "email": "libook7@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/libook/Freshness-Server/issues"
+  },
+  "homepage": "https://github.com/libook/Freshness-Server#readme",
+  "engines": {
+    "node": ">=10.8.0",
+    "npm" : ">=6.3.0"
+  }
+}

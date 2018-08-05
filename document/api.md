@@ -12,3 +12,50 @@ API for checking whether server is running.
  "Welcome to Freshness Server."
 ```
 
+
+---
+## POST /timer
+
+Create new timer.
+
+### Request:
+
+#### Body:
+
+```javascript
+ {
+     "name": String,
+     "expirationDate": String,
+ }
+```
+
+### Response:
+
+#### Body:
+
+```javascript
+ {
+     "name": String,
+     "expirationDate": String,
+ }
+```
+
+
+---
+## GET /timerList
+
+Get timer list.
+
+### Response:
+
+#### Body:
+
+```javascript
+ [
+     {
+         "name": String,
+         "expirationDate": String,
+     },
+ ]
+```
+

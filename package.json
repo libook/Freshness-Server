@@ -32,7 +32,9 @@
   },
   "dependencies": {
     "koa": "2.5.2",
-    "koa-router": "7.4.0"
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "7.4.0",
+    "mongoose": "^5.2.6"
   },
   "devDependencies": {
     "uridoc": "1.2.2"

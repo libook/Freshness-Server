@@ -13,12 +13,14 @@
 
     const Koa = require('koa');
     const KoaBodyParser = require('koa-bodyparser');
+    const KoaCors = require('@koa/cors');
     const KoaRouter = require('koa-router');
 
     const PORT = 3000;
 
     const app = new Koa();
     app.use(KoaBodyParser());
+    app.use(KoaCors());
     const router = new KoaRouter();
 
     /**

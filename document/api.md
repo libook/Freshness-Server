@@ -2,60 +2,29 @@
 ---
 ## GET /
 
-API for checking whether server is running.
 
-### Response:
-
-#### Body:
-
-```javascript
- "Welcome to Freshness Server."
-```
 
 
 ---
 ## POST /timer
 
-Create new timer.
 
-### Request:
 
-#### Body:
 
-```javascript
- {
-     "name": String,
-     "expirationDate": String,
- }
-```
+---
+## PUT /timer/:timerId
 
-### Response:
 
-#### Body:
 
-```javascript
- {
-     "name": String,
-     "expirationDate": String,
- }
-```
+
+---
+## DELETE /timer/:timerId
+
+
 
 
 ---
 ## GET /timerList
 
-Get timer list.
 
-### Response:
-
-#### Body:
-
-```javascript
- [
-     {
-         "name": String,
-         "expirationDate": String,
-     },
- ]
-```
 

@@ -7,7 +7,7 @@
 (async () => {
     const mongoose = require('mongoose');
 
-    await mongoose.connect('mongodb://127.0.0.1:27017/freshness', {
+    await mongoose.connect('mongodb://192.168.50.89:27017/freshness', {
         "useNewUrlParser": true,
     });
 
@@ -60,6 +60,79 @@
         timerRouter.post('/', async (ctx) => {
             const timer = new TimerModel(ctx.request.body);
             ctx.body = await timer.save();
+        });
+
+        /**
+         * @uri
+         * Update timer.
+         * @put /timer/:timerId
+         * @request
+         *      @params
+         *          {String} timerId - The ID of timer
+         *      @body
+         *          {
+         *              "name": String,
+         *              "expirationDate": String,
+         *          }
+         * @response
+         *      @body
+         *          {
+         *              "name": String,
+         *              "expirationDate": String,
+         *          }
+         */
+        timerRouter.put('/:timerId', async (ctx) => {
+            const updatedTimer = await TimerModel.findOneAndUpdate(
+                {
+                    "_id": ctx.params.timerId,
+                },
+                {
+                    "$set": ctx.request.body,
+                },
+                {
+                    "new": true,
+                },
+            );
+            if (updatedTimer) {
+                ctx.body = updatedTimer;
+            } else {
+                ctx.status = 404;
+            }
+        });
+
+        /**
+         * @uri
+         * Delete timer.
+         * @delete /timer/:timerId
+         * @request
+         *      @params
+         *          {String} timerId - The ID of timer
+         * @response
+         *      @body
+         *          {
+         *              "name": String,
+         *              "expirationDate": String,
+         *          }
+         */
+        timerRouter.delete('/:timerId', async (ctx) => {
+            const deletedTimer = await TimerModel.findOneAndUpdate(
+                {
+                    "_id": ctx.params.timerId,
+                },
+                {
+                    "$set": {
+                        "isDeleted": true,
+                    },
+                },
+                {
+                    "new": true,
+                },
+            );
+            if (deletedTimer) {
+                ctx.body = deletedTimer;
+            } else {
+                ctx.status = 404;
+            }
         });
 
         router.use('/timer', timerRouter.routes());

@@ -35,7 +35,7 @@
     "koa": "2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "7.4.0",
-    "mongoose": "^5.2.6"
+    "mongoose": "^5.4.13"
   },
   "devDependencies": {
     "uridoc": "1.2.2"

@@ -31,11 +31,11 @@
     "npm": ">=6.3.0"
   },
   "dependencies": {
-    "@koa/cors": "^2.2.2",
-    "koa": "2.5.2",
+    "@koa/cors": "^3.0.0",
+    "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "7.4.0",
-    "mongoose": "^5.2.6"
+    "mongoose": "^5.5.6"
   },
   "devDependencies": {
     "uridoc": "1.2.2"

@@ -1,0 +1,7 @@
+# IDEA
+.idea/
+
+# Dependency directory
+node_modules
+
+document/

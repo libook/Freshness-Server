@@ -6,7 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devel": "node source/server.js",
-    "doc": "uridoc source/server.js document/api.md"
+    "mkdoc": "uridoc source/server.js document/api.md",
+    "lint": "eslint . || true",
+    "version": "auto-changelog -p -l false -b false && git add CHANGELOG.md"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $GIT_PARAMS",
+      "pre-commit": "npx eslint .",
+      "pre-push": "npx eslint ."
+    }
   },
   "repository": {
     "type": "git",
@@ -38,6 +47,11 @@
     "mongoose": "^5.7.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "auto-changelog": "^1.16.0",
+    "eslint": "^6.2.1",
+    "husky": "^3.0.4",
     "uridoc": "^3.0.0"
   }
 }

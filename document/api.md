@@ -1,30 +1,137 @@
 
 ---
-## GET /
+### GET /
+
+API for checking whether server is running.
 
 
 
-
----
-## POST /timer
+#### Response
 
 
+##### Body
 
-
----
-## PUT /timer/:timerId
-
-
-
-
----
-## DELETE /timer/:timerId
-
-
+```javascript
+"Welcome to Freshness Server."
+```
 
 
 ---
-## GET /timerList
+### POST /timer
+
+Create new timer.
 
 
+
+#### Request
+
+
+##### Body
+
+```javascript
+{
+    "name": String,
+    "expirationDate": String,
+}
+```
+#### Response
+
+
+##### Body
+
+```javascript
+{
+    "name": String,
+    "expirationDate": String,
+}
+```
+
+
+---
+### PUT /timer/:timerId
+
+Update timer.
+
+
+
+#### Request
+
+
+##### Path
+
+Name | Description
+---- | -----------
+{String} timerId | The ID of timer
+
+
+##### Body
+
+```javascript
+{
+    "name": String,
+    "expirationDate": String,
+}
+```
+#### Response
+
+
+##### Body
+
+```javascript
+{
+    "name": String,
+    "expirationDate": String,
+}
+```
+
+
+---
+### DELETE /timer/:timerId
+
+Delete timer.
+
+
+
+#### Request
+
+
+##### Path
+
+Name | Description
+---- | -----------
+{String} timerId | The ID of timer
+
+#### Response
+
+
+##### Body
+
+```javascript
+{
+    "name": String,
+    "expirationDate": String,
+}
+```
+
+
+---
+### GET /timerList
+
+Get timer list.
+
+
+
+#### Response
+
+
+##### Body
+
+```javascript
+[
+    {
+        "name": String,
+        "expirationDate": String,
+    },
+]
+```
 

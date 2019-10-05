@@ -23,13 +23,13 @@
     app.use(KoaCors());
     const router = new KoaRouter();
 
-    /**
-     * @uri
-     * API for checking whether server is running.
-     * @get /
-     * @response
-     *      @body
-     *          "Welcome to Freshness Server."
+    /*
+     @uri
+     API for checking whether server is running.
+     @get /
+     @response
+          @body
+              "Welcome to Freshness Server."
      */
     router.get('/', (ctx) => {
         ctx.body = "Welcome to Freshness Server.";
@@ -40,46 +40,46 @@
     {
         const timerRouter = new KoaRouter();
 
-        /**
-         * @uri
-         * Create new timer.
-         * @post /timer
-         * @request
-         *      @body
-         *          {
-         *              "name": String,
-         *              "expirationDate": String,
-         *          }
-         * @response
-         *      @body
-         *          {
-         *              "name": String,
-         *              "expirationDate": String,
-         *          }
+        /*
+         @uri
+         Create new timer.
+         @post /timer
+         @request
+              @body
+                  {
+                      "name": String,
+                      "expirationDate": String,
+                  }
+         @response
+              @body
+                  {
+                      "name": String,
+                      "expirationDate": String,
+                  }
          */
         timerRouter.post('/', async (ctx) => {
             const timer = new TimerModel(ctx.request.body);
             ctx.body = await timer.save();
         });
 
-        /**
-         * @uri
-         * Update timer.
-         * @put /timer/:timerId
-         * @request
-         *      @params
-         *          {String} timerId - The ID of timer
-         *      @body
-         *          {
-         *              "name": String,
-         *              "expirationDate": String,
-         *          }
-         * @response
-         *      @body
-         *          {
-         *              "name": String,
-         *              "expirationDate": String,
-         *          }
+        /*
+         @uri
+         Update timer.
+         @put /timer/:timerId
+         @request
+              @path
+                  {String} timerId - The ID of timer
+              @body
+                  {
+                      "name": String,
+                      "expirationDate": String,
+                  }
+         @response
+              @body
+                  {
+                      "name": String,
+                      "expirationDate": String,
+                  }
          */
         timerRouter.put('/:timerId', async (ctx) => {
             const updatedTimer = await TimerModel.findOneAndUpdate(
@@ -100,19 +100,19 @@
             }
         });
 
-        /**
-         * @uri
-         * Delete timer.
-         * @delete /timer/:timerId
-         * @request
-         *      @params
-         *          {String} timerId - The ID of timer
-         * @response
-         *      @body
-         *          {
-         *              "name": String,
-         *              "expirationDate": String,
-         *          }
+        /*
+         @uri
+         Delete timer.
+         @delete /timer/:timerId
+         @request
+              @path
+                  {String} timerId - The ID of timer
+         @response
+              @body
+                  {
+                      "name": String,
+                      "expirationDate": String,
+                  }
          */
         timerRouter.delete('/:timerId', async (ctx) => {
             const deletedTimer = await TimerModel.findOneAndUpdate(
@@ -141,18 +141,18 @@
     {
         const timerListRouter = new KoaRouter();
 
-        /**
-         * @uri
-         * Get timer list.
-         * @get /timerList
-         * @response
-         *      @body
-         *          [
-         *              {
-         *                  "name": String,
-         *                  "expirationDate": String,
-         *              },
-         *          ]
+        /*
+         @uri
+         Get timer list.
+         @get /timerList
+         @response
+              @body
+                  [
+                      {
+                          "name": String,
+                          "expirationDate": String,
+                      },
+                  ]
          */
         timerListRouter.get('/', async (ctx) => {
             ctx.body = await TimerModel.find({

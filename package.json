@@ -43,14 +43,15 @@
     "@koa/cors": "^3.1.0",
     "koa": "^2.8.2",
     "koa-bodyparser": "^4.3.0",
-    "koa-router": "^9.1.0",
-    "mongoose": "^5.7.5"
+    "koa-router": "^9.4.0",
+    "sequelize": "^6.3.5",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.1",
+    "@commitlint/config-conventional": "^10.0.0",
     "auto-changelog": "^2.2.0",
-    "eslint": "^7.6.0",
+    "eslint": "^7.7.0",
     "husky": "^4.2.5",
     "uridoc": "^3.1.0"
   }

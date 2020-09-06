@@ -4,26 +4,79 @@
 
 'use strict';
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { DataTypes } = require('sequelize');
+const sequelize = require('../library/sequelize');
+const tools = require('../library/tools');
 
-const TimerSchema = new Schema({
+const Timer = sequelize.define('Timer', {
+    "id": {
+        "type": DataTypes.UUID,
+        "defaultValue": DataTypes.UUIDV4,
+        "allowNull": false,
+        "primaryKey": true,
+    },
     "name": {
-        "type": String,
-        "required": true,
+        "type": DataTypes.STRING,
+        "allowNull": false,
     },
     "expirationDate": {
-        "type": Date,
-        "required": true,
-        "index": true,
+        "type": DataTypes.DATE,
+        "allowNull": false,
     },
     "isDeleted": {
-        "type": Boolean,
-        "default": false,
-        "index": true,
+        "type": DataTypes.BOOLEAN,
+        "defaultValue": false,
+        "allowNull": false,
     },
 }, {
-    "timestamp": true,
+    "indexes": [
+        {
+            "name": "Timer-isDeleted-expirationDate",
+            "fields": [
+                {
+                    "attribute": "isDeleted",
+                    "order": 'DESC',
+                },
+                {
+                    "attribute": "expirationDate",
+                    "order": 'DESC',
+                },
+            ],
+        },
+        {
+            "name": "Timer-name-isDeleted-expirationDate",
+            "fields": [
+                {
+                    "attribute": "name",
+                    "order": 'ASC',
+                },
+                {
+                    "attribute": "isDeleted",
+                    "order": 'DESC',
+                },
+                {
+                    "attribute": "expirationDate",
+                    "order": 'DESC',
+                },
+            ],
+        },
+    ],
 });
+// "name": {
+//     "type": String,
+//     "required": true,
+// },
+// "expirationDate": {
+//     "type": Date,
+//     "required": true,
+//     "index": true,
+// },
+// "isDeleted": {
+//     "type": Boolean,
+//     "default": false,
+//     "index": true,
+// },
 
-module.exports = mongoose.model('Timer', TimerSchema);
+Timer.sync();
+
+module.exports = Timer;

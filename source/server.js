@@ -5,16 +5,13 @@
 'use strict';
 
 (async () => {
-    const mongoose = require('mongoose');
-
-    await mongoose.connect('mongodb://192.168.50.89:27017/freshness', {
-        "useNewUrlParser": true,
-    });
-
     const Koa = require('koa');
     const KoaBodyParser = require('koa-bodyparser');
     const KoaCors = require('@koa/cors');
     const KoaRouter = require('koa-router');
+    const sequelize = require('./library/sequelize');
+
+    await sequelize.sync();
 
     const PORT = 3000;
 
@@ -58,7 +55,14 @@
                   }
          */
         timerRouter.post('/', async (ctx) => {
-            const timer = new TimerModel(ctx.request.body);
+            const timer = TimerModel.build({
+                "name": ctx.request.body.name,
+                "expirationDate": (() => {
+                    const expirationDate = new Date(ctx.request.body.expirationDate);
+                    ctx.assert(!isNaN(expirationDate.getTime()));
+                    return expirationDate;
+                })(),
+            });
             ctx.body = await timer.save();
         });
 
@@ -82,19 +86,20 @@
                   }
          */
         timerRouter.put('/:timerId', async (ctx) => {
-            const updatedTimer = await TimerModel.findOneAndUpdate(
+            const timerId = ctx.params.timerId;
+            const { name, expirationDate } = ctx.request.body;
+            ctx.assert(name || expirationDate, 400, 'name and expirationDate are required.');
+
+            const timer = await TimerModel.findOne(
                 {
-                    "_id": ctx.params.timerId,
-                },
-                {
-                    "$set": ctx.request.body,
-                },
-                {
-                    "new": true,
+                    "where": {
+                        "id": timerId,
+                    },
                 },
             );
-            if (updatedTimer) {
-                ctx.body = updatedTimer;
+            if (timer) {
+                Object.assign(timer, { name, expirationDate });
+                ctx.body = await timer.save();
             } else {
                 ctx.status = 404;
             }
@@ -115,21 +120,17 @@
                   }
          */
         timerRouter.delete('/:timerId', async (ctx) => {
-            const deletedTimer = await TimerModel.findOneAndUpdate(
+            const timerId = ctx.params.timerId;
+            const timer = await TimerModel.findOne(
                 {
-                    "_id": ctx.params.timerId,
-                },
-                {
-                    "$set": {
-                        "isDeleted": true,
+                    "where": {
+                        "id": timerId,
                     },
                 },
-                {
-                    "new": true,
-                },
             );
-            if (deletedTimer) {
-                ctx.body = deletedTimer;
+            if (timer) {
+                timer.isDeleted = true;
+                ctx.body = await timer.save();
             } else {
                 ctx.status = 404;
             }
@@ -149,18 +150,20 @@
               @body
                   [
                       {
+                          "id": String,
                           "name": String,
                           "expirationDate": String,
                       },
                   ]
          */
         timerListRouter.get('/', async (ctx) => {
-            ctx.body = await TimerModel.find({
-                "isDeleted": false,
-            }, {
-                "isDeleted": false,
-            }).sort({
-                "expirationDate": 1,
+            ctx.body = await TimerModel.findAll({
+                "where": {
+                    "isDeleted": false,
+                },
+                "order": [
+                    ["expirationDate", "ASC"],
+                ],
             });
         });
 
@@ -171,8 +174,9 @@
         .use(router.routes())
         .use(router.allowedMethods());
 
-    app.listen(PORT);
-    console.log(`Freshness Server is running on ${PORT}.`);
+    app.listen(PORT, () => {
+        console.log(`Freshness Server is running on ${PORT}.`);
+    });
 })()
     .catch((error) => {
         console.error(error);
